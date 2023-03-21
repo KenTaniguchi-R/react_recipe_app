@@ -71,8 +71,11 @@ main {
 
 /* sidebar */
 .sidebar {
+  height: fit-content;
   width: 25%;
   max-width: 250px;
+  position: sticky;
+  top: 50px;
   border: var(--border);
   border-radius: var(--border-radius);
   padding: 10px;
