@@ -1,6 +1,8 @@
 :root {
   --text-color: #000000;
   --sub-text-color: #5f5f5f;
+  --border: #d4d4d4 1px solid;
+  --border-radius: 5px;
 }
 
 * {
@@ -41,14 +43,22 @@ nav {
   padding: 0.5rem;
   font-size: 1.2rem;
   max-width: 500px;
-  border: #d4d4d4 1px solid;
+  border: var(--border);
   background-color: #f2f2f2;
 }
 
 main {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding: 20px;
+  padding-top: 30px;
+}
+
+#result_content {
+  display: flex;
   justify-content: center;
+  align-items: stretch;
   gap: 10px;
   padding: 20px;
   padding-top: 30px;
@@ -59,9 +69,49 @@ main {
   max-width: 800px;
 }
 
+/* sidebar */
 .sidebar {
   width: 25%;
-  max-width: 200px;
+  max-width: 250px;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 10px;
+}
+
+
+/* filter */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.filter_content {
+  margin-top: 10px;
+}
+
+.num_range {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.num_range input {
+  width: 100%;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 5px;
+}
+
+#apply_filter {
+  width: 100%;
+  height: 40px;
+  border: var(--border);
+  background-color: #c7ffce;
+  border-radius: var(--border-radius);
+  margin-top: 20px;
+  cursor: pointer;
 }
 
 
@@ -73,9 +123,8 @@ main {
   /* justify-content: center; */
   gap: 10px;
   padding: 10px;
-  border: #d4d4d4 1px solid;
-  border-radius: 5px;
-  margin-top: 20px;
+  border: var(--border);
+  border-radius: var(--border-radius);
 }
 
 #load_more {
@@ -84,8 +133,8 @@ main {
   align-items: center;
   width: 100%;
   height: 50px;
-  border: #d4d4d4 1px solid;
-  border-radius: 5px;
+  border: var(--border);
+  border-radius: var(--border-radius);
   margin-top: 20px;
   cursor: pointer;
 }
