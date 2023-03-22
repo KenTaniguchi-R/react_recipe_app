@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 
 import Nav from './Nav'
 import Filters from './Filter'
@@ -50,12 +50,40 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useLocalStorage('searchTerm', 'potato');
   const [urlParams, setUrlParams] = useState({});
   const [searchingTerm, setSearchingTerm] = useState(searchTerm);
-  const [recipes, setRecipes] = useState(DEBUG ? sampleRecipes : []);
+
+  const recipesReducer = (state, action) => {
+    switch (action.type) {
+      case 'fetch_init':
+        return { ...state, loading: true, error: false };
+      case 'fetch_success':
+        return { ...state, loading: false, error: false, recipes: action.payload };
+      case 'load_more_init':
+        return { ...state, loading: true, error: false};
+      case 'load_more_success':
+        return { ...state, loading: false, error: false, recipes: [...state.recipes, ...action.payload] };
+      case 'filter_init':
+        return { ...state, loading: true, error: false};
+      case 'filter_success':
+        return { ...state, loading: false, error: false, recipes: action.payload };
+      default:
+        return state;
+    }
+  }
+
+  const [recipe_data, dispatchRecipes] = useReducer(recipesReducer, {recipes: DEBUG ? sampleRecipes : [], loading: false, error: false});
+
+
 
   useEffect(() => {
     const load = async () => {
+      dispatchRecipes({
+        type: 'fetch_init'
+      });
       let [hits, next_page] = await load_recipe(API_ENDPORT + searchTerm);
-      setRecipes(hits);
+      dispatchRecipes({
+        type: 'fetch_success',
+        payload: hits
+      });
       setUrlParams({});
     }
     if (!DEBUG) load();
@@ -75,8 +103,14 @@ const App = () => {
       }
     }
     const load = async () => {
+      dispatchRecipes({
+        type: 'filter_init'
+      })
       let [hits, next_page] = await load_recipe(url);
-      setRecipes(hits);
+      dispatchRecipes({
+        type: 'filter_success',
+        payload: hits
+      });
     }
     if (!DEBUG) load();
   }, [urlParams])
@@ -93,7 +127,7 @@ const App = () => {
         </div>
 
         <div className='main_content'>
-          <RecipeList recipes={recipes} setRecipes={setRecipes}/>
+          <RecipeList recipe_data={recipe_data} dispatchRecipes={dispatchRecipes}/>
         </div>
       </div>
     </main>

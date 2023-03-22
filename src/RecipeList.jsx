@@ -1,27 +1,33 @@
 let next_page;
 
-const RecipeList = ({recipes, setRecipes}) => {
+const RecipeList = ({recipe_data, dispatchRecipes}) => {
 
-    const LoadMore = () => {
-        const load = async () => {
+const LoadMore = () => {
+    const load = async () => {
+        dispatchRecipes({
+            type: 'load_more_init'
+        })
         let [hits, next_n_page] = await load_recipe(next_page);
-        setRecipes([...recipes, ...hits]);
+        dispatchRecipes({
+            type: 'load_more_success',
+            payload: hits
+        });
         next_page = next_n_page;
-        }
-        load()
+    }
+    load()
     }
 
     return (
         <div className='recipes'>
-        {recipes.map((recipe) => {
+        {recipe_data.recipes.map((recipe) => {
             return <RecipeBox key={recipe.recipe.uri.split("#")[1]} recipe={recipe.recipe}/>}
         )}
         {next_page && <button id="load_more" onClick={LoadMore} >Load more...</button>}
         </div>
     )
-    }
+}
 
-    const RecipeBox = ({recipe}) => {
+const RecipeBox = ({recipe}) => {
     return (
         <div className='recipe_box'>
         <a href={recipe.url} target="_blank">
