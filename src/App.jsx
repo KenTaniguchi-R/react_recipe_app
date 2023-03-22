@@ -5,7 +5,6 @@ import Filters from './Filter'
 import RecipeList from './RecipeList'
 import sampleRecipes from './sample_data'
 
-
 // import './App.css'
 
 // https://api.edamam.com/api/recipes/v2?type=public&q=potato&app_id=cc240aca&app_key=0a8c95e6cec1cf2d3976f987892f75d7
@@ -75,7 +74,6 @@ const App = () => {
         url += `&${key}=${value}`;
       }
     }
-    console.log(url)
     const load = async () => {
       let [hits, next_page] = await load_recipe(url);
       setRecipes(hits);

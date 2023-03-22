@@ -5,7 +5,7 @@ import {mealType_options, dishType_options} from './filter_options'
 
 const Filters = ({setUrlParams}) => {
 
-    const [caloriesRange, setCaloriesRange] = useState([0, 5000]);
+    const [caloriesRange, setCaloriesRange] = useState([0, 2000]);
     const [cookTimeRange, setCookTimeRange] = useState([0, 200]);
     const [mealType, setMealType] = useState([]);
     const [dishType, setDishType] = useState([]);
@@ -22,11 +22,9 @@ const Filters = ({setUrlParams}) => {
         })
     }
 
-
-
     const handleFilter = () => {
         const new_params = {}
-        if (caloriesRange[0] !== 0 || caloriesRange[1] !== 5000) new_params.calories = `${caloriesRange[0]}-${caloriesRange[1]}`;
+        if (caloriesRange[0] !== 0 || caloriesRange[1] !== 2000) new_params.calories = `${caloriesRange[0]}-${caloriesRange[1]}`;
         if (cookTimeRange[0] !== 0 || cookTimeRange[1] !== 200) new_params.time = `${cookTimeRange[0]}-${cookTimeRange[1]}`;
         if (mealType.length !== 0) new_params.mealType = mealType.map(e => e.value);
         if (dishType.length !== 0) new_params.dishType = dishType.map(e => e.value);
