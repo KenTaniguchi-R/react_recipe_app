@@ -127,7 +127,7 @@ const App = () => {
         </div>
 
         <div className='main_content'>
-          <RecipeList recipe_data={recipe_data} dispatchRecipes={dispatchRecipes}/>
+          <RecipeList recipe_data={recipe_data} dispatchRecipes={dispatchRecipes} next_page={next_page}/>
         </div>
       </div>
     </main>
